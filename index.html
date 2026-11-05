@@ -413,7 +413,7 @@
 <section class="screen hidden" id="final-screen">
   <div class="final-card">
     <h2 class="section-heading">para você, mãe</h2>
-    <p class="final-text" id="final-text">Feliz aniversário! Obrigado por cada gesto de carinho, cada conselho e cada abraço que fizeram de mim quem eu sou hoje.
+    <p class="final-text" id="final-text">Obrigado por cada gesto de carinho, cada conselho e cada abraço que fizeram de mim quem eu sou hoje.
 Que esse novo ano venha cheio de saúde, alegria e momentos leves ao lado de quem você ama.
 
 Te amo mais do que as palavras conseguem dizer.</p>
@@ -434,12 +434,12 @@ Te amo mais do que as palavras conseguem dizer.</p>
    ====================================================================== */
 const CONFIG = {
   // Data e horário de liberação (hora local de Pernambuco)
-  RELEASE_DATE: "2026-11-04",   // formato AAAA-MM-DD
-  RELEASE_TIME: "22:01:00",     // formato HH:MM:SS
+  RELEASE_DATE: "2026-11-05",   // formato AAAA-MM-DD
+  RELEASE_TIME: "22:30:00",     // formato HH:MM:SS
   TIMEZONE_OFFSET: "-03:00",    // America/Recife não tem horário de verão
 
   // URL do seu Google Apps Script publicado como Web App (ver tutorial)
-  GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbym_rft3C6paHfgtGCmhTEcMNZgrzrgRyR7IWN8xo5KkV_qUg_gWBqzfjRyMmSsGzv3PQ/exec",
+  GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzllwnBNfOMNP5nmZKTB8BjqbQByXX4Ey4yVqfRwqwVbzaJ3jpXbGRGM74p5tzFOjpO/exec",
 
   // Texto final (pode usar quebras de linha)
   FINAL_MESSAGE: null // se preencher uma string aqui, substitui o texto padrão acima
@@ -572,14 +572,16 @@ function startFlow(){
 }
 startFlow();
 
-/* ---------------- galeria via Google Apps Script ------------------------ */
+/* ---------------- galeria via Google Apps Script (JSONP) ---------------- */
+/* Usamos JSONP (tag <script>) em vez de fetch() porque o Apps Script
+   não envia cabeçalhos CORS de forma confiável para fetch/XHR — a tag
+   <script> não sofre esse bloqueio. */
 let galleryLoaded = false;
 
-async function loadGallery(){
+function loadGallery(){
   if (galleryLoaded) return;
   galleryLoaded = true;
 
-  const grid = document.getElementById('gallery-grid');
   const status = document.getElementById('gallery-status');
 
   if (!CONFIG.GOOGLE_APPS_SCRIPT_URL || CONFIG.GOOGLE_APPS_SCRIPT_URL.indexOf('COLE_AQUI') !== -1) {
@@ -588,35 +590,59 @@ async function loadGallery(){
     return;
   }
 
-  try {
-    const res = await fetch(CONFIG.GOOGLE_APPS_SCRIPT_URL, { method: 'GET' });
-    if (!res.ok) throw new Error('resposta HTTP ' + res.status);
-    const data = await res.json();
-
-    if (!Array.isArray(data) || data.length === 0) {
-      status.textContent = 'Nenhuma foto encontrada na pasta ainda.';
-      return;
-    }
-
-    status.remove();
-    const frag = document.createDocumentFragment();
-    data.forEach(photo => {
-      const item = document.createElement('div');
-      item.className = 'g-item';
-      const img = document.createElement('img');
-      img.loading = 'lazy';
-      img.src = photo.thumbnailUrl || photo.url;
-      img.alt = photo.name || 'foto';
-      img.addEventListener('click', () => openLightbox(photo.url || photo.thumbnailUrl));
-      img.addEventListener('error', () => { item.style.display = 'none'; });
-      item.appendChild(img);
-      frag.appendChild(item);
-    });
-    grid.appendChild(frag);
-  } catch (err) {
+  const script = document.createElement('script');
+  const sep = CONFIG.GOOGLE_APPS_SCRIPT_URL.indexOf('?') === -1 ? '?' : '&';
+  script.src = CONFIG.GOOGLE_APPS_SCRIPT_URL + sep + 'callback=__onGalleryData';
+  script.onerror = function(){
     status.textContent = 'Não foi possível carregar as fotos agora. Verifique sua conexão.';
     status.classList.add('error');
+  };
+
+  // tempo limite caso o script nem carregue nem dê erro
+  const timeout = setTimeout(() => {
+    if (!status.isConnected) return;
+    status.textContent = 'O carregamento está demorando. Verifique a URL do Apps Script e tente novamente.';
+    status.classList.add('error');
+  }, 12000);
+
+  window.__onGalleryData = function(data){
+    clearTimeout(timeout);
+    renderGallery(data);
+  };
+
+  document.body.appendChild(script);
+}
+
+function renderGallery(data){
+  const grid = document.getElementById('gallery-grid');
+  const status = document.getElementById('gallery-status');
+
+  if (data && data.error) {
+    status.textContent = 'Erro no Apps Script: ' + data.error;
+    status.classList.add('error');
+    return;
   }
+
+  if (!Array.isArray(data) || data.length === 0) {
+    status.textContent = 'Nenhuma foto encontrada na pasta ainda.';
+    return;
+  }
+
+  status.remove();
+  const frag = document.createDocumentFragment();
+  data.forEach(photo => {
+    const item = document.createElement('div');
+    item.className = 'g-item';
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = photo.thumbnailUrl || photo.url;
+    img.alt = photo.name || 'foto';
+    img.addEventListener('click', () => openLightbox(photo.url || photo.thumbnailUrl));
+    img.addEventListener('error', () => { item.style.display = 'none'; });
+    item.appendChild(img);
+    frag.appendChild(item);
+  });
+  grid.appendChild(frag);
 }
 
 function openLightbox(src){
