@@ -413,7 +413,7 @@
 <section class="screen hidden" id="final-screen">
   <div class="final-card">
     <h2 class="section-heading">para você, mãe</h2>
-    <p class="final-text" id="final-text">Obrigado por cada gesto de carinho, cada conselho e cada abraço que fizeram de mim quem eu sou hoje.
+    <p class="final-text" id="final-text">Obrigado(a) por cada gesto de carinho, cada conselho e cada abraço que fizeram de mim quem eu sou hoje.
 Que esse novo ano venha cheio de saúde, alegria e momentos leves ao lado de quem você ama.
 
 Te amo mais do que as palavras conseguem dizer.</p>
@@ -434,12 +434,29 @@ Te amo mais do que as palavras conseguem dizer.</p>
    ====================================================================== */
 const CONFIG = {
   // Data e horário de liberação (hora local de Pernambuco)
-  RELEASE_DATE: "2026-11-04",   // formato AAAA-MM-DD
-  RELEASE_TIME: "22:30:00",     // formato HH:MM:SS
+  RELEASE_DATE: "2026-11-05",   // formato AAAA-MM-DD
+  RELEASE_TIME: "00:00:00",     // formato HH:MM:SS
   TIMEZONE_OFFSET: "-03:00",    // America/Recife não tem horário de verão
 
   // URL do seu Google Apps Script publicado como Web App (ver tutorial)
-  GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzllwnBNfOMNP5nmZKTB8BjqbQByXX4Ey4yVqfRwqwVbzaJ3jpXbGRGM74p5tzFOjpO/exec",
+  // Deixe como está se for usar o modo manual abaixo (PHOTO_IDS).
+  GOOGLE_APPS_SCRIPT_URL: "COLE_AQUI_A_URL_DO_SEU_APPS_SCRIPT",
+
+  // MODO MANUAL (mais simples, não depende do Apps Script):
+  // cole aqui os IDs das fotos do Google Drive, um por linha.
+  // Como pegar o ID: clique com botão direito na foto no Drive → Compartilhar
+  // → "Qualquer pessoa com o link" → Copiar link. O link fica assim:
+  // https://drive.google.com/file/d/ESTE_PEDAÇO_AQUI_É_O_ID/view
+  // copie só a parte entre /d/ e /view e cole abaixo, entre aspas, separado por vírgula.
+  PHOTO_IDS: [
+    "1qhxX0dp4iAcFmOR5aYzSRgatV29htRKz",
+    "1NmFvQ7cpezkuUFbIPeQmI6Aq5XIQDpRz",
+    "1M3ZTOn5PDomQ9ryB7G7xMI5UbyEoN784",
+    "1HY1BkQo4qUYam88L5KcHX2boNAQkwboT",
+    "1o-JScMdkFtJRhJ6Kq49wNnJZqGNux7bu",
+    "1nF2FMqoCwF7-5zC4E4ZWE-ATCl_A4kM2",
+    "1eu0du4GQFUAYScJLQ6e6A0inFRugwRF8",
+  ],
 
   // Texto final (pode usar quebras de linha)
   FINAL_MESSAGE: null // se preencher uma string aqui, substitui o texto padrão acima
@@ -583,6 +600,18 @@ function loadGallery(){
   galleryLoaded = true;
 
   const status = document.getElementById('gallery-status');
+
+  // MODO MANUAL: se houver IDs preenchidos em CONFIG.PHOTO_IDS, usa eles
+  // diretamente, sem precisar do Apps Script nem de rede nenhuma.
+  if (Array.isArray(CONFIG.PHOTO_IDS) && CONFIG.PHOTO_IDS.length > 0) {
+    const photos = CONFIG.PHOTO_IDS.map(id => ({
+      name: id,
+      thumbnailUrl: 'https://drive.google.com/thumbnail?id=' + id + '&sz=w800',
+      url: 'https://drive.google.com/thumbnail?id=' + id + '&sz=w1600'
+    }));
+    renderGallery(photos);
+    return;
+  }
 
   if (!CONFIG.GOOGLE_APPS_SCRIPT_URL || CONFIG.GOOGLE_APPS_SCRIPT_URL.indexOf('COLE_AQUI') !== -1) {
     status.textContent = 'Configure a URL do Google Apps Script em CONFIG.GOOGLE_APPS_SCRIPT_URL.';
