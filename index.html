@@ -107,15 +107,15 @@
 
   /* ---------- intro / countdown ---------- */
   #intro-screen .eyebrow{
-    font-size: 0.95rem;
+    font-size: 1.3rem;
     color: var(--rose-soft);
-    max-width: 320px;
+    max-width: 340px;
     line-height:1.5;
     margin-bottom: 28px;
     font-weight:500;
   }
   .countdown-title{
-    font-size: clamp(1.6rem, 6vw, 2.4rem);
+    font-size: clamp(2rem, 7vw, 2.8rem);
     font-style: italic;
     color: var(--cream);
     margin-bottom: 30px;
@@ -133,18 +133,19 @@
   }
   .count-num{
     font-family:'Cormorant Garamond', serif;
-    font-size: clamp(2.1rem, 9vw, 3.4rem);
+    font-size: clamp(2.5rem, 11vw, 4rem);
     font-weight:600;
     color: var(--gold);
     line-height:1;
     font-variant-numeric: tabular-nums;
   }
   .count-label{
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
     color: var(--rose-soft);
     margin-top: 6px;
     text-transform: lowercase;
+    font-weight:600;
   }
   .count-sep{
     font-family:'Cormorant Garamond', serif;
@@ -157,9 +158,10 @@
     background: transparent;
     border: 1px solid var(--line);
     color: var(--rose-soft);
-    padding: 14px 30px;
+    padding: 16px 32px;
     border-radius: 999px;
-    font-size: 0.95rem;
+    font-size: 1.15rem;
+    font-weight: 600;
     letter-spacing: 0.02em;
     cursor: not-allowed;
     transition: all .4s ease;
@@ -192,13 +194,14 @@
 
   /* ---------- reveal screen ---------- */
   #reveal-screen .pre-title{
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
     color: var(--rose-soft);
     margin-bottom: 14px;
+    font-weight: 600;
   }
   .big-title{
-    font-size: clamp(2.4rem, 11vw, 4.2rem);
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
     line-height: 1.05;
     background: linear-gradient(135deg, var(--rose) 0%, var(--gold) 60%, var(--rose-soft) 100%);
     -webkit-background-clip:text;
@@ -213,46 +216,52 @@
   }
   .reveal-sub{
     max-width: 420px;
-    font-size: 1.05rem;
+    font-size: 1.3rem;
     color: var(--cream);
-    opacity: 0.92;
-    line-height: 1.6;
-    margin-bottom: 34px;
+    opacity: 0.95;
+    line-height: 1.65;
+    margin-bottom: 30px;
     animation: title-in 1.4s 0.3s cubic-bezier(.2,.8,.2,1) both;
   }
   .scroll-cue{
-    font-size: 0.8rem;
-    color: var(--rose-soft);
-    opacity:0.75;
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:6px;
+    gap:4px;
+    margin-top: 10px;
   }
-  .scroll-cue span{
-    width:1px; height:28px;
-    background: linear-gradient(var(--rose-soft), transparent);
-    animation: cue-move 1.8s ease-in-out infinite;
+  .scroll-arrow{
+    font-size: 2.6rem;
+    line-height:1;
+    color: var(--gold);
+    text-shadow: 0 0 18px rgba(233,196,104,0.55);
+    animation: cue-move 1.6s ease-in-out infinite;
+  }
+  .scroll-text{
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gold);
   }
   @keyframes cue-move{
-    0%,100%{ transform: translateY(0); opacity:0.4;}
-    50%{ transform: translateY(6px); opacity:1;}
+    0%,100%{ transform: translateY(0); opacity:0.6;}
+    50%{ transform: translateY(10px); opacity:1;}
   }
 
   /* ---------- gallery ---------- */
   #gallery-screen{ padding-top: 60px; padding-bottom: 60px; }
   .section-heading{
-    font-size: clamp(1.8rem, 7vw, 2.6rem);
+    font-size: clamp(2.1rem, 8vw, 3rem);
     font-style: italic;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   .section-sub{
-    font-size: 0.92rem;
+    font-size: 1.15rem;
     color: var(--rose-soft);
-    opacity:0.85;
-    max-width: 340px;
+    opacity:0.9;
+    max-width: 360px;
     margin-bottom: 36px;
-    line-height:1.55;
+    line-height:1.6;
   }
   .gallery-grid{
     width:100%;
@@ -326,17 +335,17 @@
     max-width: 460px;
   }
   .final-text{
-    font-size: 1.08rem;
-    line-height: 1.85;
+    font-size: 1.3rem;
+    line-height: 1.9;
     color: var(--cream);
-    opacity:0.95;
+    opacity:0.97;
     margin: 22px 0 30px;
     white-space: pre-line;
   }
   .signature{
     font-family:'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 1.7rem;
+    font-size: 2.1rem;
     color: var(--gold);
     margin-bottom: 30px;
   }
@@ -370,7 +379,7 @@
 <!-- TELA 1: CONTAGEM REGRESSIVA                              -->
 <!-- ======================================================= -->
 <section class="screen" id="intro-screen">
-  <p class="eyebrow">Tenho uma surpresa especial esperando por você...</p>
+  <p class="eyebrow">Tenho uma surpresa especial esperando pela senhora...</p>
   <h1 class="countdown-title">faltam</h1>
 
   <div class="countdown" id="countdown">
@@ -392,8 +401,11 @@
 <section class="screen hidden" id="reveal-screen">
   <p class="pre-title">hoje é um dia muito especial</p>
   <h2 class="big-title">Feliz<br>Aniversário!</h2>
-  <p class="reveal-sub">Preparei este cantinho só para guardar um pouco do tanto que você significa pra mim. Desça a tela para ver.</p>
-  <div class="scroll-cue"><span></span>deslize</div>
+  <p class="reveal-sub">A senhora é o maior presente que eu já recebi na vida. Preparei este cantinho só para guardar um pouco do tanto que a senhora significa pra mim.</p>
+  <div class="scroll-cue">
+    <span class="scroll-arrow">⌄</span>
+    <span class="scroll-text">deslize para ver mais</span>
+  </div>
 </section>
 
 <!-- ======================================================= -->
@@ -412,11 +424,14 @@
 <!-- ======================================================= -->
 <section class="screen hidden" id="final-screen">
   <div class="final-card">
-    <h2 class="section-heading">para você, mãe</h2>
-    <p class="final-text" id="final-text">Obrigado(a) por cada gesto de carinho, cada conselho e cada abraço que fizeram de mim quem eu sou hoje.
-Que esse novo ano venha cheio de saúde, alegria e momentos leves ao lado de quem você ama.
+    <h2 class="section-heading">para a senhora, mãe</h2>
+    <p class="final-text" id="final-text">Mãe, obrigado por cada gesto de carinho, cada conselho e cada abraço que fizeram de mim quem eu sou hoje.
 
-Te amo mais do que as palavras conseguem dizer.</p>
+A senhora merece todo o amor e toda a felicidade do mundo, hoje e sempre.
+
+Que esse novo ano venha cheio de saúde, alegria e momentos leves ao lado de quem a senhora ama.
+
+Eu te amo mais do que as palavras conseguem dizer.</p>
     <p class="signature">Feliz aniversário 💛</p>
     <div class="heart-row"><span>♥</span><span>♥</span><span>♥</span></div>
   </div>
@@ -434,28 +449,21 @@ Te amo mais do que as palavras conseguem dizer.</p>
    ====================================================================== */
 const CONFIG = {
   // Data e horário de liberação (hora local de Pernambuco)
-  RELEASE_DATE: "2026-11-04",  // formato AAAA-MM-DD
-  RELEASE_TIME: "22:59:30",     // formato HH:MM:SS
+  RELEASE_DATE: "2026-11-05",   // formato AAAA-MM-DD
+  RELEASE_TIME: "00:00:00",     // formato HH:MM:SS
   TIMEZONE_OFFSET: "-03:00",    // America/Recife não tem horário de verão
 
-  // URL do seu Google Apps Script publicado como Web App (ver tutorial)
-  // Deixe como está se for usar o modo manual abaixo (PHOTO_IDS).
-  GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzllwnBNfOMNP5nmZKTB8BjqbQByXX4Ey4yVqfRwqwVbzaJ3jpXbGRGM74p5tzFOjpO/exec",
-
-  // MODO MANUAL (mais simples, não depende do Apps Script):
-  // cole aqui os IDs das fotos do Google Drive, um por linha.
-  // Como pegar o ID: clique com botão direito na foto no Drive → Compartilhar
-  // → "Qualquer pessoa com o link" → Copiar link. O link fica assim:
-  // https://drive.google.com/file/d/ESTE_PEDAÇO_AQUI_É_O_ID/view
-  // copie só a parte entre /d/ e /view e cole abaixo, entre aspas, separado por vírgula.
-  PHOTO_IDS: [
-    "1qhxX0dp4iAcFmOR5aYzSRgatV29htRKz",
-    "1NmFvQ7cpezkuUFbIPeQmI6Aq5XIQDpRz",
-    "1M3ZTOn5PDomQ9ryB7G7xMI5UbyEoN784",
-    "1HY1BkQo4qUYam88L5KcHX2boNAQkwboT",
-    "1o-JScMdkFtJRhJ6Kq49wNnJZqGNux7bu",
-    "1nF2FMqoCwF7-5zC4E4ZWE-ATCl_A4kM2",
-    "1eu0du4GQFUAYScJLQ6e6A0inFRugwRF8",
+  // Fotos da galeria: cole aqui a URL direta de cada imagem (ex: links do ibb.co,
+  // imgur, ou qualquer serviço de hospedagem de imagem). Para adicionar uma foto
+  // nova, é só colocar mais uma linha nessa lista e subir o arquivo de novo.
+  PHOTOS: [
+    "https://i.ibb.co/qYk5sR4m/20210928-075447.jpg",
+    "https://i.ibb.co/JwMWHH6g/20240310-220837.jpg",
+    "https://i.ibb.co/wZnHy0Tp/20250329-103432.jpg",
+    "https://i.ibb.co/WvhjhSYd/20251227-184851.jpg",
+    "https://i.ibb.co/21cqz8Ns/IMG-20251227-225041610-MFNR-HDR.jpg",
+    "https://i.ibb.co/ymtTQnww/IMG-20250409-WA0011.jpg",
+    "https://i.ibb.co/gZ6FqPZZ/IMG-20250520-WA0002.jpg",
   ],
 
   // Texto final (pode usar quebras de linha)
@@ -589,84 +597,32 @@ function startFlow(){
 }
 startFlow();
 
-/* ---------------- galeria via Google Apps Script (JSONP) ---------------- */
-/* Usamos JSONP (tag <script>) em vez de fetch() porque o Apps Script
-   não envia cabeçalhos CORS de forma confiável para fetch/XHR — a tag
-   <script> não sofre esse bloqueio. */
+/* ---------------- galeria: imagens diretas (tag <img>) ------------------- */
 let galleryLoaded = false;
 
 function loadGallery(){
   if (galleryLoaded) return;
   galleryLoaded = true;
 
-  const status = document.getElementById('gallery-status');
-
-  // MODO MANUAL: se houver IDs preenchidos em CONFIG.PHOTO_IDS, usa eles
-  // diretamente, sem precisar do Apps Script nem de rede nenhuma.
-  if (Array.isArray(CONFIG.PHOTO_IDS) && CONFIG.PHOTO_IDS.length > 0) {
-    const photos = CONFIG.PHOTO_IDS.map(id => ({
-      name: id,
-      thumbnailUrl: 'https://drive.google.com/thumbnail?id=' + id + '&sz=w800',
-      url: 'https://drive.google.com/thumbnail?id=' + id + '&sz=w1600'
-    }));
-    renderGallery(photos);
-    return;
-  }
-
-  if (!CONFIG.GOOGLE_APPS_SCRIPT_URL || CONFIG.GOOGLE_APPS_SCRIPT_URL.indexOf('COLE_AQUI') !== -1) {
-    status.textContent = 'Configure a URL do Google Apps Script em CONFIG.GOOGLE_APPS_SCRIPT_URL.';
-    status.classList.add('error');
-    return;
-  }
-
-  const script = document.createElement('script');
-  const sep = CONFIG.GOOGLE_APPS_SCRIPT_URL.indexOf('?') === -1 ? '?' : '&';
-  script.src = CONFIG.GOOGLE_APPS_SCRIPT_URL + sep + 'callback=__onGalleryData';
-  script.onerror = function(){
-    status.textContent = 'Não foi possível carregar as fotos agora. Verifique sua conexão.';
-    status.classList.add('error');
-  };
-
-  // tempo limite caso o script nem carregue nem dê erro
-  const timeout = setTimeout(() => {
-    if (!status.isConnected) return;
-    status.textContent = 'O carregamento está demorando. Verifique a URL do Apps Script e tente novamente.';
-    status.classList.add('error');
-  }, 12000);
-
-  window.__onGalleryData = function(data){
-    clearTimeout(timeout);
-    renderGallery(data);
-  };
-
-  document.body.appendChild(script);
-}
-
-function renderGallery(data){
   const grid = document.getElementById('gallery-grid');
   const status = document.getElementById('gallery-status');
 
-  if (data && data.error) {
-    status.textContent = 'Erro no Apps Script: ' + data.error;
+  if (!Array.isArray(CONFIG.PHOTOS) || CONFIG.PHOTOS.length === 0) {
+    status.textContent = 'Adicione os links das fotos em CONFIG.PHOTOS.';
     status.classList.add('error');
-    return;
-  }
-
-  if (!Array.isArray(data) || data.length === 0) {
-    status.textContent = 'Nenhuma foto encontrada na pasta ainda.';
     return;
   }
 
   status.remove();
   const frag = document.createDocumentFragment();
-  data.forEach(photo => {
+  CONFIG.PHOTOS.forEach(src => {
     const item = document.createElement('div');
     item.className = 'g-item';
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.src = photo.thumbnailUrl || photo.url;
-    img.alt = photo.name || 'foto';
-    img.addEventListener('click', () => openLightbox(photo.url || photo.thumbnailUrl));
+    img.src = src;
+    img.alt = 'foto de família';
+    img.addEventListener('click', () => openLightbox(src));
     img.addEventListener('error', () => { item.style.display = 'none'; });
     item.appendChild(img);
     frag.appendChild(item);
